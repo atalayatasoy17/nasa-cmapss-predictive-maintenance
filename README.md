@@ -2,23 +2,50 @@
 
 A step-by-step project for predicting the Remaining Useful Life (RUL) of simulated turbofan engines using the NASA C-MAPSS dataset.
 
-## Problem
+## Objective
 
-Given an engine's operational settings and sensor measurements over time, predict how many operational cycles remain before failure. This is a regression problem.
+Given an engine's operational settings and sensor measurements over time, estimate how many operational cycles remain before failure. This is a regression problem.
 
 ## Dataset
 
-The dataset contains four subsets: FD001, FD002, FD003, and FD004. Each row represents one engine at one operational cycle and contains an engine ID, a cycle number, three operational settings, and 21 sensor measurements.
+Each row represents one engine at one operational cycle. It contains an engine ID, a cycle number, three operational settings, and 21 sensor measurements.
 
-Training trajectories continue until failure. Test trajectories stop before failure, and the corresponding true RUL values are provided separately.
+Training trajectories continue until failure. Test trajectories stop before failure; their true RUL values are provided in separate files.
 
-Dataset source: [NASA C-MAPSS Jet Engine Simulated Data](https://data.nasa.gov/dataset/cmapss-jet-engine-simulated-data).
+| Subset | Operating conditions | Fault modes |
+| --- | ---: | ---: |
+| FD001 | 1 | 1 |
+| FD002 | 6 | 1 |
+| FD003 | 1 | 2 |
+| FD004 | 6 | 2 |
 
-The raw dataset is kept locally in `CMAPSSData/` and is excluded from this repository.
+Source: [NASA C-MAPSS Jet Engine Simulated Data](https://data.nasa.gov/dataset/cmapss-jet-engine-simulated-data).
+
+The raw data belongs in `CMAPSSData/`. This folder is excluded from Git.
+
+## Repository structure
+
+- `notebooks/`: Exploratory analysis and experiments
+- `src/`: Reusable Python code
+- `reports/figures/`: Generated charts and figures
+- `requirements.txt`: Python dependencies
+
+## Getting started
+
+From the project root on macOS or Linux:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+jupyter lab
+```
+
+Place the dataset files in `CMAPSSData/` before opening the notebooks.
 
 ## Project status
 
-This project is in progress. We will document each step as we explore the data, build models, and evaluate their predictions.
+In progress. The planned steps are data exploration, RUL target construction, model training, and evaluation. Results will be added after the experiments are completed.
 
 ## Reference
 
