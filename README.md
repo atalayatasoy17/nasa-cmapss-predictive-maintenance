@@ -38,7 +38,8 @@ Raw data is excluded from Git.
 | `notebooks/01_data_overview.ipynb` | Data checks, RUL construction, sensor exploration, and train/test comparisons |
 | `notebooks/02_baseline_model.ipynb` | Dummy, Linear Regression, and Random Forest baselines |
 | `notebooks/03_feature_engineering.ipynb` | Temporal features, model comparison, and exploratory maintenance alerts |
-| `src/` | Reserved for reusable Python code |
+| `src/features.py` | Computes four temporal features using each engine's current and earlier cycles |
+| `src/model.py` | Trains the FD001 temporal Random Forest and predicts capped RUL at each test engine's last observation |
 | `reports/figures/` | Reserved for exported figures |
 | `requirements.txt` | Python dependencies |
 
