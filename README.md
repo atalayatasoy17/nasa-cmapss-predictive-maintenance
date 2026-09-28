@@ -42,6 +42,7 @@ Raw data is excluded from Git.
 | `src/model.py` | Trains the FD001 temporal Random Forest and predicts capped RUL for every observed cycle or each test engine's last observation |
 | `src/alerts.py` | Applies the illustrative alert rule: predicted RUL at most 30 for three consecutive cycles |
 | `src/run_fd001.py` | Reproduces FD001 test metrics and illustrative alerts with one command |
+| `tests/test_alerts.py` | Checks alert confirmation, engine isolation, and missing cycles |
 | `reports/figures/` | Reserved for exported figures |
 | `requirements.txt` | Python dependencies |
 
@@ -65,6 +66,12 @@ To reproduce the FD001 test evaluation and alert count from the project root:
 
 ```bash
 python3 -m src.run_fd001
+```
+
+To run the alert rule unit tests from the project root:
+
+```bash
+python3 -m unittest discover -s tests -v
 ```
 
 ## Methods
