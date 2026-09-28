@@ -65,3 +65,19 @@ def predict_fd001_last_observations(
     )
 
     return predictions
+
+
+def predict_fd001_history(
+    model: RandomForestRegressor,
+    feature_columns: list[str],
+    raw_test: pd.DataFrame,
+) -> pd.DataFrame:
+    """Predict capped RUL at every observed test cycle."""
+    test = add_temporal_features(raw_test)
+
+    history = test[["unit_id", "cycle"]].copy()
+    history["predicted_RUL_capped"] = model.predict(
+        test[feature_columns]
+    )
+
+    return history

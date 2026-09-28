@@ -39,7 +39,8 @@ Raw data is excluded from Git.
 | `notebooks/02_baseline_model.ipynb` | Dummy, Linear Regression, and Random Forest baselines |
 | `notebooks/03_feature_engineering.ipynb` | Temporal features, model comparison, and exploratory maintenance alerts |
 | `src/features.py` | Computes four temporal features using each engine's current and earlier cycles |
-| `src/model.py` | Trains the FD001 temporal Random Forest and predicts capped RUL at each test engine's last observation |
+| `src/model.py` | Trains the FD001 temporal Random Forest and predicts capped RUL for every observed cycle or each test engine's last observation |
+| `src/alerts.py` | Applies the illustrative alert rule: predicted RUL at most 30 for three consecutive cycles |
 | `reports/figures/` | Reserved for exported figures |
 | `requirements.txt` | Python dependencies |
 
