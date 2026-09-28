@@ -41,6 +41,7 @@ Raw data is excluded from Git.
 | `src/features.py` | Computes four temporal features using each engine's current and earlier cycles |
 | `src/model.py` | Trains the FD001 temporal Random Forest and predicts capped RUL for every observed cycle or each test engine's last observation |
 | `src/alerts.py` | Applies the illustrative alert rule: predicted RUL at most 30 for three consecutive cycles |
+| `src/run_fd001.py` | Reproduces FD001 test metrics and illustrative alerts with one command |
 | `reports/figures/` | Reserved for exported figures |
 | `requirements.txt` | Python dependencies |
 
@@ -52,12 +53,19 @@ From the project root on macOS or Linux:
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-jupyter lab
-
-
 ```
 
-Run the notebooks in numerical order. Start JupyterLab from the project root so the notebooks can find `CMAPSSData/`.
+Run the notebooks in numerical order. Start JupyterLab from the project root so the notebooks can find `CMAPSSData/`:
+
+```bash
+jupyter lab
+```
+
+To reproduce the FD001 test evaluation and alert count from the project root:
+
+```bash
+python3 -m src.run_fd001
+```
 
 ## Methods
 
