@@ -73,11 +73,15 @@ Run the notebooks in numerical order. Start JupyterLab from the project root so 
 
 The cross-validation metrics use all held-out train rows and the capped RUL target. The test metrics use one last observation per engine and the actual, uncapped RUL. These are different evaluation settings and should not be compared directly. Temporal features improved cross-validation MAE in all five folds. On the test engines, the MAE difference was small and RMSE did not improve.
 
+At the engine level, temporal features reduced out-of-fold MAE for 65 of 100 train engines across all observations. In the near-failure period (true RUL 0–50), they reduced MAE for 79 engines and increased it for 21.
+
 ## Exploratory maintenance alerts
 
 An example alert rule marks an engine when predicted RUL is at most 30 for three consecutive observed cycles. The rule was examined with a hypothetical goal of warning at least 20 cycles before failure.
 
 On the observed test histories, the baseline model alerted 17 engines and the temporal model alerted 18. Both alerted 15 of the 16 engines whose true RUL was at most 20 at the last observation. Among those 16 engines, 11 received a baseline alert and 13 received a temporal-model alert at least 20 cycles before failure.
+
+For the 21 train engines whose near-failure MAE increased, the temporal model gave the first confirmed alert earlier for 12 engines, later for 7, and at the same cycle for 2. Alerts came at least 20 cycles before failure for 15 engines with the baseline model and 16 with the temporal model. This exploratory comparison shows that higher average prediction error does not necessarily mean a later alert.
 
 These thresholds are examples, not an operational maintenance policy. Test trajectories end before failure, so future alerts for engines without an observed alert cannot be evaluated. The test set was also examined during this exploratory project; these results should not be treated as an untouched final benchmark.
 
