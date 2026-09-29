@@ -42,7 +42,8 @@ Raw data is excluded from Git.
 | `src/model.py` | Trains the FD001 temporal Random Forest and predicts capped RUL for every observed cycle or each test engine's last observation |
 | `src/alerts.py` | Applies the illustrative alert rule: predicted RUL at most 30 for three consecutive cycles |
 | `src/inference.py` | Combines RUL predictions and alerts into each engine's latest status |
-| `src/predict_fd001.py` | Runs inference without the test RUL file |
+| `src/train_fd001.py` | Trains the FD001 temporal model and saves it in `models/` |
+| `src/predict_fd001.py` | Loads the saved model and runs inference without train data or test RUL |
 | `src/run_fd001.py` | Evaluates test predictions using the true RUL file and reports alerts |
 | `tests/test_alerts.py` | Checks alert confirmation, engine isolation, and missing cycles |
 | `reports/figures/` | Reserved for exported figures |
@@ -64,7 +65,15 @@ Run the notebooks in numerical order. Start JupyterLab from the project root so 
 jupyter lab
 ```
 
-To run FD001 inference using `train_FD001.txt` and `test_FD001.txt`, without the test RUL file:
+Train and save the FD001 model once:
+
+```bash
+python3 -m src.train_fd001
+```
+
+This creates `models/fd001_temporal.joblib`. The `models/` directory is excluded from Git.
+
+Load the saved model and predict from `test_FD001.txt`:
 
 ```bash
 python3 -m src.predict_fd001

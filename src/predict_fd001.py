@@ -1,29 +1,29 @@
 from pathlib import Path
 
+import joblib
 import pandas as pd
 
 from src.inference import infer_fd001_engine_status
-from src.model import BASE_CANDIDATES, fit_fd001_temporal_model
+from src.model import BASE_CANDIDATES
 
 
-DATA_DIR = Path(__file__).resolve().parents[1] / "CMAPSSData"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = PROJECT_ROOT / "CMAPSSData"
+ARTIFACT_FILE = PROJECT_ROOT / "models" / "fd001_temporal.joblib"
 COLUMNS = ["unit_id"] + BASE_CANDIDATES
 
 
-def load_trajectory(filename: str) -> pd.DataFrame:
-    return pd.read_csv(
-        DATA_DIR / filename,
+def main() -> None:
+    artifact = joblib.load(ARTIFACT_FILE)
+    model = artifact["model"]
+    feature_columns = artifact["feature_columns"]
+
+    test = pd.read_csv(
+        DATA_DIR / "test_FD001.txt",
         sep=r"\s+",
         header=None,
         names=COLUMNS,
     )
-
-
-def main() -> None:
-    train = load_trajectory("train_FD001.txt")
-    test = load_trajectory("test_FD001.txt")
-
-    model, feature_columns = fit_fd001_temporal_model(train)
     status = infer_fd001_engine_status(model, feature_columns, test)
 
     print("Model features:", len(feature_columns))
