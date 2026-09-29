@@ -41,7 +41,9 @@ Raw data is excluded from Git.
 | `src/features.py` | Computes four temporal features using each engine's current and earlier cycles |
 | `src/model.py` | Trains the FD001 temporal Random Forest and predicts capped RUL for every observed cycle or each test engine's last observation |
 | `src/alerts.py` | Applies the illustrative alert rule: predicted RUL at most 30 for three consecutive cycles |
-| `src/run_fd001.py` | Reproduces FD001 test metrics and illustrative alerts with one command |
+| `src/inference.py` | Combines RUL predictions and alerts into each engine's latest status |
+| `src/predict_fd001.py` | Runs inference without the test RUL file |
+| `src/run_fd001.py` | Evaluates test predictions using the true RUL file and reports alerts |
 | `tests/test_alerts.py` | Checks alert confirmation, engine isolation, and missing cycles |
 | `reports/figures/` | Reserved for exported figures |
 | `requirements.txt` | Python dependencies |
@@ -62,7 +64,13 @@ Run the notebooks in numerical order. Start JupyterLab from the project root so 
 jupyter lab
 ```
 
-To reproduce the FD001 test evaluation and alert count from the project root:
+To run FD001 inference using `train_FD001.txt` and `test_FD001.txt`, without the test RUL file:
+
+```bash
+python3 -m src.predict_fd001
+```
+
+To reproduce the FD001 test evaluation and alert count with `RUL_FD001.txt`:
 
 ```bash
 python3 -m src.run_fd001

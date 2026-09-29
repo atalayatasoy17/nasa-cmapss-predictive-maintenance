@@ -3,12 +3,8 @@ from pathlib import Path
 import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-from src.alerts import add_confirmed_alerts
-from src.model import (
-    BASE_CANDIDATES,
-    fit_fd001_temporal_model,
-    predict_fd001_history,
-)
+from src.inference import infer_fd001_engine_status
+from src.model import BASE_CANDIDATES, fit_fd001_temporal_model
 
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "CMAPSSData"
@@ -29,14 +25,12 @@ def main() -> None:
     test = load_trajectory("test_FD001.txt")
 
     model, feature_columns = fit_fd001_temporal_model(train)
-    history = predict_fd001_history(model, feature_columns, test)
-    alerts = add_confirmed_alerts(history, threshold=30, consecutive_cycles=3)
-
-    last = (
-        alerts.groupby("unit_id")
-        .tail(1)
-        .sort_values("unit_id")
-        .reset_index(drop=True)
+    last = infer_fd001_engine_status(
+        model,
+        feature_columns,
+        test,
+        threshold=30,
+        consecutive_cycles=3,
     )
 
     truth = pd.read_csv(
@@ -63,7 +57,7 @@ def main() -> None:
     print()
     print(
         last[
-            ["unit_id", "cycle", "predicted_RUL_capped",
+            ["unit_id", "last_observed_cycle", "predicted_RUL_capped",
              "true_RUL", "ever_confirmed"]
         ].head().round(2).to_string(index=False)
     )
